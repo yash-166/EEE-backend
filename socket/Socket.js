@@ -3,6 +3,7 @@ let cardCounts = [0, 0, 0, 0];
 
 let level2Active = false;
 
+
 const formatTime12Hour = (date) => {
   const options = { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
   return new Intl.DateTimeFormat('en-US', options).format(date);
@@ -22,8 +23,7 @@ const setUpSocket = (io) => {
       socket.emit("update_firstlevel", firstLevelTeams);
       socket.emit("update_secondlevel", secondLevelTeams);
       socket.emit("update_click_counts", cardCounts);
-      socket.emit("toggle_level2", level2Active);
-      
+     
       
     } catch (error) {
       console.error("Error fetching initial data:", error);
@@ -75,6 +75,7 @@ const setUpSocket = (io) => {
 
     socket.on("start_level", async ({ startTime }) => {
       try {
+        startedLevel2 = true;
         // const formattedTime = formatTime12Hour(new Date(startTime));
         await Team.updateMany({}, { startedTime: startTime });
 

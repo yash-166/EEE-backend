@@ -12,6 +12,7 @@ router.post('/saveSelection',teamController.saveSelection)
 router.get('/getSelection/:teamId',teamController.getSelection)
 router.get('/getStats',teamController.getStats)
 router.get('/get-revealed-card',teamController.getRevealedCard)
+router.delete('/delete-all-teams',teamController.deleteAllRecords)
 
 
 module.exports = router;

@@ -199,7 +199,18 @@ const getRevealedCard = async(req,res) => {
 
 
 
+const deleteAllRecords = async(req,res) => {
+  try {
+    await Team.deleteMany({});
+    res.status(200).send({ message: "All records deleted successfully" });
 
+    const updatedTeams = await Team.find({});
+
+    req.io.emit("update_teams", updatedTeams); 
+  } catch (error) {
+    res.status(500).send({ message: "Error deleting records", error });
+  }
+}
 
 
 
@@ -219,5 +230,5 @@ const registerCount = async() => {
 
 
 module.exports = {
-  register,getRevealedCard, registerCount,compareLogicGates,submitFirstLevel, submitSecondLevel,getSelection,saveSelection,getStats
+  register,getRevealedCard,deleteAllRecords,registerCount,compareLogicGates,submitFirstLevel, submitSecondLevel,getSelection,saveSelection,getStats
 }

@@ -1,42 +1,3 @@
-// const express = require("express");
-// const app = express();
-// const PORT = process.env.PORT || 8000;
-// const teamRoutes = require('./routes/teamRoutes');
-
-// require("dotenv").config(); 
-
-
-// require("./db/conn")
-
-// app.use(express.json());
-
-// const cors = require("cors");
-// app.use(cors({credentials:true}));
-
-
-
-
-// app.use('/team',teamRoutes);
-
-
-
-// async function startServer(){
-//     try{
-//         app.listen(PORT,() => {
-//             console.log(`Server is running on port ${PORT}`);
-//         })
-//     }
-//     catch(error){
-//         console.log("Error while strting server is:",error);
-//     }
-// }
-
-// startServer();
-
-
-
-
-
 const express = require("express");
 const http = require("http"); // Import http module
 const socketIo = require("socket.io");
@@ -44,6 +5,7 @@ const {setUpSocket} = require('./socket/Socket')
 const cors = require("cors");
 require("dotenv").config();
 const teamRoutes = require("./routes/teamRoutes");
+const adminRoutes = require("./routes/adminRoutes")
 const PORT = process.env.PORT || 8000;
 
 require("./db/conn");
@@ -68,8 +30,7 @@ app.use((req, res, next) => {
 
 
 app.use("/team", teamRoutes);
-
-
+app.use("/admin",adminRoutes)
 
 setUpSocket(io)
 
