@@ -106,7 +106,7 @@ const submitSecondLevel = async (req, res) => {
 
       const team = await Team.findByIdAndUpdate(
         teamId, 
-        { secondLevelSubmitted: true,finishTime:finishTime}, 
+        {finishTime:finishTime}, 
         { new: true }
     );
 
@@ -214,7 +214,29 @@ const deleteAllRecords = async(req,res) => {
 
 
 
+const uploadFile = async(req,res) => {
+  try {
+    const { teamId,fileUrl } = req.body;
 
+    if (!teamId || !fileUrl) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    const team = await Team.findById(teamId);
+    if (!team) {
+      return res.status(404).json({ error: "Team not found" });
+    }
+
+    team.levelTwoFile = fileUrl;
+    team.secondLevelSubmitted = true;
+    await team.save();
+
+    res.status(200).json({ message: "Level Two submission successful" });
+  } catch (error) {
+    console.error("Error submitting Level Two:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
 
 
 
@@ -230,5 +252,5 @@ const registerCount = async() => {
 
 
 module.exports = {
-  register,getRevealedCard,deleteAllRecords,registerCount,compareLogicGates,submitFirstLevel, submitSecondLevel,getSelection,saveSelection,getStats
+  register,submitSecondLevel,getRevealedCard,deleteAllRecords,registerCount,compareLogicGates,submitFirstLevel,uploadFile,getSelection,saveSelection,getStats
 }

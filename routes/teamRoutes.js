@@ -7,6 +7,7 @@ router.post('/register',teamController.register);
 router.post('/match',teamController.compareLogicGates);
 router.get('/count',teamController.registerCount);
 router.post('/submit-firstlevel',teamController.submitFirstLevel)
+router.post('/uploadFile',teamController.uploadFile)
 router.post('/submitSecondLevel',teamController.submitSecondLevel)
 router.post('/saveSelection',teamController.saveSelection)
 router.get('/getSelection/:teamId',teamController.getSelection)

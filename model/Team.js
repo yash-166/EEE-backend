@@ -32,7 +32,8 @@ const teamSchema = new mongoose.Schema({
     startedTime: { type: String, default: "" },
     finishTime: { type: String, default: "" },
     selectedCard: { type: Number, default: null },
-    revealedCard: { type: String, default: null } 
+    revealedCard: { type: String, default: null }, 
+    levelTwoFile: { type: String, default: "" }
 });
 
 // Create model
