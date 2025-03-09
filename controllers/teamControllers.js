@@ -115,8 +115,6 @@ const submitSecondLevel = async (req, res) => {
 
 
       if (!team) return res.status(404).json({ message: "Team not found" });
-
-      req.io.emit("update_secondlevel", await Team.find({ secondLevelSubmitted: true }),finishTime);
       res.status(200).json({ message: "Second level submitted", team });
   } catch (error) {
       res.status(500).json({ message: "Server Error", error: error.message });
@@ -231,6 +229,7 @@ const uploadFile = async(req,res) => {
     team.secondLevelSubmitted = true;
     await team.save();
 
+    req.io.emit("update_secondlevel", await Team.find({ secondLevelSubmitted: true }));
     res.status(200).json({ message: "Level Two submission successful" });
   } catch (error) {
     console.error("Error submitting Level Two:", error);

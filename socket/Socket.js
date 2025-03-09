@@ -18,7 +18,7 @@ const setUpSocket = (io) => {
       const teams = await Team.find({});
       const firstLevelTeams = teams.filter(team => team.firstLevelSubmitted);
       const secondLevelTeams = teams.filter(team => team.secondLevelSubmitted);
-
+      console.log("secondLevelTeams is:",secondLevelTeams);
       socket.emit("update_teams", teams);
       socket.emit("update_firstlevel", firstLevelTeams);
       socket.emit("update_secondlevel", secondLevelTeams);
@@ -76,14 +76,13 @@ const setUpSocket = (io) => {
     socket.on("start_level", async ({ startTime }) => {
       try {
         startedLevel2 = true;
-        // const formattedTime = formatTime12Hour(new Date(startTime));
+        
         await Team.updateMany({}, { startedTime: startTime });
 
         const updatedTeams = await Team.find();
-        // console.log("updated teams are:",updatedTeams);
-
+       
         io.emit("start_level", { startTime });
-        io.emit("update_secondlevel", updatedTeams);
+        
         io.emit("level_start_time", startTime);
 
         console.log(`Level started at: ${startTime}`);
